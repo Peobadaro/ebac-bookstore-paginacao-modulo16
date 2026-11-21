@@ -146,3 +146,8 @@ if TESTING:
     INSTALLED_APPS = [app for app in INSTALLED_APPS if app != "debug_toolbar"]
     MIDDLEWARE = [m for m in MIDDLEWARE if m != "debug_toolbar.middleware.DebugToolbarMiddleware"]
 
+# Paginação do Django REST Framework
+REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 5,
+}
