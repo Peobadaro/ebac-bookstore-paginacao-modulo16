@@ -15,6 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
+from django.conf import settings
 from django.contrib import admin
 from django.urls import include, re_path, path
 
@@ -23,3 +24,6 @@ urlpatterns = [
     re_path(r"^bookstore/(?P<version>(v1|v2))/", include("product.urls")),
     re_path(r"^bookstore/(?P<version>(v1|v2))/", include("order.urls")),
 ]
+
+if not settings.TESTING:
+    urlpatterns += [path("__debug__/", include("debug_toolbar.urls"))]

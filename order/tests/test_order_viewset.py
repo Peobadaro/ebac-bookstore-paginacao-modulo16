@@ -20,9 +20,10 @@ class OrderViewSetTest(APITestCase):
     def test_list_orders(self):
         response = self.client.get(self.list_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0]["product"][0]["title"], "Django")
-        self.assertEqual(response.data[0]["total"], 100)
+        self.assertEqual(response.data["count"], 1)
+        self.assertEqual(len(response.data["results"]), 1)
+        self.assertEqual(response.data["results"][0]["product"][0]["title"], "Django")
+        self.assertEqual(response.data["results"][0]["total"], 100)
 
     def test_retrieve_order(self):
         response = self.client.get(self.detail_url)

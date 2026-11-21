@@ -18,8 +18,9 @@ class CategoryViewSetTest(APITestCase):
     def test_list_categories(self):
         response = self.client.get(self.list_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0]["title"], "Tecnologia")
+        self.assertEqual(response.data["count"], 1)
+        self.assertEqual(len(response.data["results"]), 1)
+        self.assertEqual(response.data["results"][0]["title"], "Tecnologia")
 
     def test_retrieve_category(self):
         response = self.client.get(self.detail_url)

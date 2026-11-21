@@ -43,3 +43,20 @@ As rotas ficam em `product/urls.py` e `order/urls.py` e são incluídas em `book
 ```bash
 poetry run python manage.py show_urls
 ```
+
+## Paginação
+
+A paginação do DRF está ligada para todos os ViewSets em `bookstore/settings.py`:
+
+```python
+REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 5,
+}
+```
+
+As listas voltam com `count`, `next`, `previous` e `results` (5 itens por página). Para ver outra página: `/bookstore/v1/product/?page=2`.
+
+## Django Debug Toolbar
+
+Instalado como dependência de desenvolvimento. Com `DEBUG = True`, a barra aparece ao abrir a API no navegador em `127.0.0.1` e mostra quantas queries SQL cada requisição fez, o tempo, o cache e outros painéis. Ela fica desligada durante os testes.
