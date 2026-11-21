@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.1/ref/settings/
 """
 
+import sys
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,6 +26,9 @@ SECRET_KEY = "django-insecure-+rcg7ed&t-^i*$6pe=)azb2%d8)kizv3i$s!gr7mso=$ud6dh#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# O Debug Toolbar fica desligado enquanto os testes rodam.
+TESTING = "test" in sys.argv
+
 ALLOWED_HOSTS = []
 
 
@@ -39,11 +43,13 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "django_extensions",
+    "debug_toolbar",
     "product",
     "order",
 ]
 
 MIDDLEWARE = [
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -129,3 +135,14 @@ MAILERS = {
         "BACKEND": "django.core.mail.backends.console.EmailBackend",
     },
 }
+
+
+# Django Debug Toolbar (aparece só para quem acessa de 127.0.0.1)
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
+if TESTING:
+    INSTALLED_APPS = [app for app in INSTALLED_APPS if app != "debug_toolbar"]
+    MIDDLEWARE = [m for m in MIDDLEWARE if m != "debug_toolbar.middleware.DebugToolbarMiddleware"]
+
